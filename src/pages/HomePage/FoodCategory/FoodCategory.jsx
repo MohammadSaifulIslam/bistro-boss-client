@@ -15,10 +15,16 @@ import slide5 from '../../../assets/home/slide5.jpg';
 
 // import required modules
 import { FreeMode, Pagination } from "swiper";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
 const FoodCategory = () => {
     return (
         <section className="my-container my-20">
+            <SectionTitle
+            subHeading={'from 9.00 am to 10.00 pm'}
+            heading={'ORDER ONLINE'}
+            >
+            </SectionTitle>
             <Swiper
                 slidesPerView={4}
                 spaceBetween={20}
