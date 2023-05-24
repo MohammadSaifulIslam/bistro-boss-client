@@ -4,7 +4,7 @@ import PopularMenuCard from "../../Shared/Card/PopularMenuCard/PopularMenuCard";
 
 const PopularMenu = () => {
     const [menu] = useMenu();
-    const PopularMenu = menu.filter(food => food.category === 'popular');
+    const popularMenu = menu.filter(food => food.category === 'popular');
     return (
         <section className="my-container mb-20 ">
             <SectionTitle
@@ -14,7 +14,7 @@ const PopularMenu = () => {
             </SectionTitle>
             <div className="grid md:grid-cols-2 gap-5">
                 {
-                    PopularMenu.map(menu => <PopularMenuCard
+                    popularMenu.map(menu => <PopularMenuCard
                         key={menu._id}
                         menu={menu}
                     ></PopularMenuCard>)

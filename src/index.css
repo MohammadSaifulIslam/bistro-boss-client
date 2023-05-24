@@ -5,3 +5,7 @@
 .my-container {
   @apply px-5 max-w-7xl mx-auto;
 }
+
+.outline-btn {
+  @apply uppercase text-xl font-medium mt-10 btn btn-outline border-x-0 border-t-0 border-4;
+}
