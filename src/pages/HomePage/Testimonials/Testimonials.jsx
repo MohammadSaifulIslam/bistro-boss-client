@@ -9,7 +9,10 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
+import { FaQuoteLeft } from "react-icons/fa";
 
+import { Rating } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
 
 const Testimonials = () => {
     const [reviews, setReviews] = useState([]);
@@ -20,23 +23,32 @@ const Testimonials = () => {
             .then(data => setReviews(data))
     }, [])
     return (
-        <section className="my-container mb-20 ">
+        <section className="my-container my-20 ">
             <SectionTitle
-                subHeading={'Check it out'}
-                heading={'FROM OUR MENU'}
+                subHeading={'What Our Clients Say'}
+                heading={'Testimonials'}
             >
             </SectionTitle>
 
-            <div>
+            <div className="text-center">
                 <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-                   {
-                    reviews.map(review =>  <SwiperSlide
-                    key={review._id}
-                    >
-                        <p>{review.details}</p>
-                        <h4 className="text-secondary ">{review.name}</h4>
-                 </SwiperSlide>)
-                   }
+                    {
+                        reviews.map(review => <SwiperSlide
+                            key={review._id}
+                        >
+                            <div className="px-10 md:px-20 ">
+                                <Rating
+                                    style={{ maxWidth: 180 }}
+                                    value={review.rating}
+                                    readOnly
+                                    className="mx-auto"
+                                />
+                                <FaQuoteLeft className="text-6xl mx-auto mt-10" />
+                                <p className="text-xl mt-10">{review.details}</p>
+                                <h4 className="text-secondary text-3xl font-medium">{review.name}</h4>
+                            </div>
+                        </SwiperSlide>)
+                    }
                 </Swiper>
             </div>
 
