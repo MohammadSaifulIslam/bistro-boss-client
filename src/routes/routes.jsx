@@ -18,7 +18,7 @@ const router = createBrowserRouter([
           element: <MenuHome/>
         },
         {
-          path: '/order',
+          path: '/order/:category',
           element: <OrderHome/>
         },
       ]

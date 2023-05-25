@@ -52,6 +52,7 @@ const MenuHome = () => {
             <div className='my-container my-20'>
                 <MenuCategory
                     items={dessertMenu.slice(0, 6)}
+                    category={'dessert'}
                 ></MenuCategory>
             </div>
 
@@ -66,6 +67,7 @@ const MenuHome = () => {
             <div className='my-container my-20'>
                 <MenuCategory
                     items={pizzaMenu.slice(0, 6)}
+                    category={'pizza'}
                 ></MenuCategory>
             </div>
 
@@ -79,6 +81,7 @@ const MenuHome = () => {
             <div className='my-container my-20'>
                 <MenuCategory
                     items={saladMenu.slice(0, 6)}
+                    category={'salad'}
                 ></MenuCategory>
             </div>
 
@@ -92,6 +95,7 @@ const MenuHome = () => {
             <div className='my-container my-20'>
                 <MenuCategory
                     items={soupMenu.slice(0, 6)}
+                    category={'soup'}
                 ></MenuCategory>
             </div>
 
