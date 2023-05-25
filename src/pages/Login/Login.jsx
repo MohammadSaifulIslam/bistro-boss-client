@@ -1,28 +1,41 @@
 import { useForm } from "react-hook-form";
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
 
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import loginBg from '../../assets/others/authentication.png';
 import loginImg from '../../assets/others/authentication2.png';
+import { AuthContext } from "../../providers/AuthProvider/AuthProvider";
 
 
 
 const Login = () => {
+    const [error, setError] = useState(null);
+    const { loginUser } = useContext(AuthContext);
     const capthaRef = useRef(null);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = data => {
+        setError(null)
+        const { email, password } = data;
         // validate captcha and disabled btn 
-
         let user_captcha_value = capthaRef.current.value;
 
+
         if (validateCaptcha(user_captcha_value) == true) {
-            alert('Captcha Matched');
+            loginUser(email, password)
+                .then(result => {
+                    console.log(result.user)
+                    reset()
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
 
         else {
-            alert('Captcha Does Not Match');
+            setError('Captcha Does Not Match')
         }
         console.log({ data })
         console.log(capthaRef.current.value)
@@ -49,7 +62,7 @@ const Login = () => {
                         required: true,
                         pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
                     })} type="password" />
-                    
+
                     {errors.password?.type === 'required' && <p className="mt-1 p-0 mb-0 text-red-600">Password is required</p>}
                     {errors.password?.type === 'pattern' && <p className="mt-1 p-0 mb-0 text-red-600">Password must be one number, one uppercase, one lowercase and one special character</p>}
 
@@ -59,6 +72,8 @@ const Login = () => {
                     <input className="my-input mt-7" ref={capthaRef} placeholder="Type the above captcha" type="text" />
 
                     <input className={`login-btn w-full mt-7`} type="submit" />
+                    <p className="mt-2 text-center text-red-600">{error}</p>
+
                     <p className="text-accent mt-5 text-center">New here? <Link to='/register' className="font-semibold">Create a New Account</Link></p>
                 </form>
             </div>

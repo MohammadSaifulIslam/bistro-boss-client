@@ -32,7 +32,7 @@ const Register = () => {
         else {
             setError('Captcha Does Not Match')
         }
-        console.log({ data })
+        console.log({ data, name })
         console.log(capthaRef.current.value)
 
     };
