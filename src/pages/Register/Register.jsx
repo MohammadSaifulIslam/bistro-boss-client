@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import registerBg from '../../assets/others/authentication.png';
 import registerImg from '../../assets/others/authentication2.png';
 import { AuthContext } from "../../providers/AuthProvider/AuthProvider";
@@ -10,25 +11,37 @@ import { AuthContext } from "../../providers/AuthProvider/AuthProvider";
 
 const Register = () => {
     const [error, setError] = useState(null);
-    const {createUser} = useContext(AuthContext);
+    const { createUser, userProfileUpdate } = useContext(AuthContext);
     const capthaRef = useRef(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+
 
     const onSubmit = data => {
         setError(null);
-        const {name, email, password} = data
+        const { name, photo, email, password } = data
         // validate captcha and disabled btn 
         let user_captcha_value = capthaRef.current.value;
 
         if (validateCaptcha(user_captcha_value) == true) {
             createUser(email, password)
-            .then(result =>{
-                console.log(result.user)
-                reset()
-            })
-            .catch(error => setError(error.message))
-        }
+                .then(result => {
+                    console.log(result.user)
+                    userProfileUpdate(name, photo)
+                        .then(() => console.log('user information update'))
+                        .catch(error => console.log(error))
 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Register Success',
+                        text: 'You successfully create account'
+                    })
+                    reset()
+                    navigate('/login')
+
+                })
+                .catch(error => setError(error.message))
+        }
         else {
             setError('Captcha Does Not Match')
         }
@@ -53,6 +66,9 @@ const Register = () => {
                     {errors.name && <p className="mt-1 p-0 mb-0 text-red-600">Name is required</p>}
                     <input className="my-input mt-5" placeholder="Your Email" {...register("email", { required: true })} type="email" />
                     {errors.email && <p className="mt-1 p-0 mb-0 text-red-600">Email is required</p>}
+
+                    <input className="my-input mt-5" placeholder="Photo URL" {...register("photo", { required: true })} type="url" />
+                    {errors.photo && <p className="mt-1 p-0 mb-0 text-red-600">Photo is required</p>}
 
                     <input className="my-input mt-5" placeholder="Your Password" {...register("password", {
                         required: true,

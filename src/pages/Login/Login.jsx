@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import loginBg from '../../assets/others/authentication.png';
 import loginImg from '../../assets/others/authentication2.png';
 import { AuthContext } from "../../providers/AuthProvider/AuthProvider";
@@ -14,6 +15,8 @@ const Login = () => {
     const { loginUser } = useContext(AuthContext);
     const capthaRef = useRef(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+
 
     const onSubmit = data => {
         setError(null)
@@ -25,9 +28,14 @@ const Login = () => {
         if (validateCaptcha(user_captcha_value) == true) {
             loginUser(email, password)
                 .then(result => {
-                    console.log(result.user)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Success',
+                        text: 'You successfully logged in'
+                    })
+                    console.log(result)
                     reset()
-
+                    navigate('/')
                 })
                 .catch(error => {
                     console.log(error)
