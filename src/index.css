@@ -5,7 +5,12 @@
 .my-container {
   @apply px-5 max-w-7xl mx-auto;
 }
-
+.login-btn {
+  @apply py-4 px-7 rounded-md text-white bg-accent text-xl font-bold;
+}
 .outline-btn {
   @apply uppercase text-xl font-medium mt-10 btn btn-outline border-x-0 border-t-0 border-4;
+}
+.my-input {
+  @apply input p-2 w-full rounded-lg focus:outline-accent;
 }
