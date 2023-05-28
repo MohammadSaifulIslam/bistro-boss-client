@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import loginBg from '../../assets/others/authentication.png';
 import loginImg from '../../assets/others/authentication2.png';
@@ -16,6 +16,8 @@ const Login = () => {
     const capthaRef = useRef(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
 
 
     const onSubmit = data => {
@@ -35,7 +37,7 @@ const Login = () => {
                     })
                     console.log(result)
                     reset()
-                    navigate('/')
+                    navigate(from)
                 })
                 .catch(error => {
                     console.log(error)
