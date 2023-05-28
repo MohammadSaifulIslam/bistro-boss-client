@@ -17,3 +17,7 @@
 .captcha-canvas div {
   margin-top: 5px !important;
 }
+
+.my-btn {
+  @apply py-2 px-5 rounded-lg bg-accent text-white font-medium text-lg duration-500 active:scale-110;
+}
