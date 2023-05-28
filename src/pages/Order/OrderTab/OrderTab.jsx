@@ -34,7 +34,7 @@ const OrderTab = ({ items }) => {
                             key={index}>
                             <div className='grid grid-cols-3 gap-6 mt-10'>
                                 {
-                                    items.map(food => <FoodCard
+                                    items.slice(page * 6, (page + 1) * 6).map(food => <FoodCard
                                         key={food._id}
                                         food={food}
                                     ></FoodCard>)
