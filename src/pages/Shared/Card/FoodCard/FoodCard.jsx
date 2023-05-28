@@ -1,17 +1,19 @@
 import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../../../hooks/useCart";
 import { AuthContext } from "../../../../providers/AuthProvider/AuthProvider";
 
 const FoodCard = ({ food }) => {
-    const { user } = useContext(AuthContext)
-    const { image, name, price, recipe ,_id} = food;
+    const { user } = useContext(AuthContext);
+    const [, refetch] = useCart();
+    const { image, name, price, recipe, _id } = food;
     const navigate = useNavigate()
     const location = useLocation();
 
-    const handleAddtoCart = (food) => {
+    const handleAddtoCart = () => {
         if (user && user.email) {
-            const cartItem = {userEmail: user.email , image, name, price, menuId: _id}
+            const cartItem = { userEmail: user.email, image, name, price, menuId: _id }
             fetch('http://localhost:5000/carts', {
                 method: "POST",
                 headers: {
@@ -22,6 +24,7 @@ const FoodCard = ({ food }) => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.insertedId) {
+                        refetch();
                         toast.success('Food added to cart')
                     }
                     console.log(data)
@@ -29,7 +32,7 @@ const FoodCard = ({ food }) => {
         }
         else {
             toast('You need to login first');
-            navigate('/login', {state: {from: location}});
+            navigate('/login', { state: { from: location } });
         }
     }
 
@@ -40,7 +43,7 @@ const FoodCard = ({ food }) => {
             <div className="py-8 px-10 bg-slate-50">
                 <h4 className="text-2xl font-bold">{name}</h4>
                 <p className="mb-5 text-gray-600">{recipe}</p>
-                <button onClick={() => handleAddtoCart(food)} className="btn">Add to cart</button>
+                <button onClick={() => handleAddtoCart()} className="btn">Add to cart</button>
             </div>
         </div>
     );
