@@ -7,44 +7,45 @@ import MyCart from "../pages/MyCart/MyCart";
 import OrderHome from "../pages/Order/OrderHome/OrderHome";
 import Register from "../pages/Register/Register";
 import Login from "../pages/login/Login";
+import PrivateRoutes from "../privateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main></Main>,
-      children: [
-        {
-          path: '/',
-          element: <Home/>
-        },
-        {
-          path: '/menu',
-          element: <MenuHome/>
-        },
-        {
-          path: '/order/:category',
-          element: <OrderHome/>
-        },
-        {
-          path: 'login',
-          element: <Login/>
-        },
-        {
-          path: 'register',
-          element: <Register/>
-        },
-      ]
-    },
-    {
-      path: 'dashboard',
-      element: <DhashBord/>,
-      children:[
-        {
-          path: 'my-cart',
-          element: <MyCart/>
-        },
-      ]
-    }
-  ]);
+  {
+    path: "/",
+    element: <Main></Main>,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: '/menu',
+        element: <MenuHome />
+      },
+      {
+        path: '/order/:category',
+        element: <OrderHome />
+      },
+      {
+        path: 'login',
+        element: <Login />
+      },
+      {
+        path: 'register',
+        element: <Register />
+      },
+    ]
+  },
+  {
+    path: 'dashboard',
+    element: <DhashBord />,
+    children: [
+      {
+        path: 'my-cart',
+        element: <PrivateRoutes> <MyCart /></PrivateRoutes>
+      },
+    ]
+  }
+]);
 
 export default router;

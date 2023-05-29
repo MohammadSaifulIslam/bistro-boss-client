@@ -28,16 +28,30 @@ const Register = () => {
                 .then(result => {
                     console.log(result.user)
                     userProfileUpdate(name, photo)
-                        .then(() => console.log('user information update'))
+                        .then(() => {
+                            const saveUser = { name, email }
+                            fetch('http://localhost:5000/users', {
+                                method: "POST",
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(saveUser)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.insertedId) {
+                                        console.log(data)
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Register Success',
+                                            text: 'You successfully create account'
+                                        })
+                                        reset()
+                                        navigate('/login')
+                                    }
+                                })
+                        })
                         .catch(error => console.log(error))
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Register Success',
-                        text: 'You successfully create account'
-                    })
-                    reset()
-                    navigate('/login')
 
                 })
                 .catch(error => setError(error.message))

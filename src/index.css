@@ -21,3 +21,7 @@
 .my-btn {
   @apply py-2 px-5 rounded-lg bg-accent text-white font-medium text-lg duration-500 active:scale-110;
 }
+
+.drawer-side a.active {
+  @apply text-white bg-transparent;
+}

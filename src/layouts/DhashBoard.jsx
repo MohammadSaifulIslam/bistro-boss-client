@@ -3,7 +3,7 @@ import { FaBars, FaHome, FaShoppingBag } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { HiMail, HiOutlineHome } from "react-icons/hi";
 import { SlCalender } from "react-icons/sl";
-import { Link, Outlet, ScrollRestoration } from "react-router-dom";
+import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 const DhashBord = () => {
     return (
         <div className="drawer drawer-mobile">
@@ -14,7 +14,7 @@ const DhashBord = () => {
                 <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 
             </div>
-            <div className="drawer-side ">
+            <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
                 <div className="w-72 p-4 text-black bg-accent">
@@ -23,10 +23,10 @@ const DhashBord = () => {
                     <h4 className="text-xl font-bold text-center uppercase">Restaurant</h4>
 
                     <ul className="menu mt-3">
-                        <li><Link><HiOutlineHome/> User Home</Link></li>
-                        <li><Link><SlCalender/> Reservation</Link></li>
-                        <li><Link><BiWallet/> Payment History</Link></li>
-                        <li><Link to='/dashboard/my-cart'><GiShoppingCart/> My Cart</Link></li>
+                        <li><NavLink to='/abc'><HiOutlineHome/> User Home</NavLink></li>
+                        <li><NavLink to='/abc'><SlCalender/> Reservation</NavLink></li>
+                        <li><NavLink to='/abc'><BiWallet/> Payment History</NavLink></li>
+                        <li><NavLink to='/dashboard/my-cart'><GiShoppingCart/> My Cart</NavLink></li>
 
                         <hr className="border-black my-2" />
 
