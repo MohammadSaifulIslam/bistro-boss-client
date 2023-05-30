@@ -5,7 +5,7 @@ import { HiMail, HiOutlineHome, HiOutlineUserGroup } from "react-icons/hi";
 import { SlCalender } from "react-icons/sl";
 import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 const DhashBord = () => {
-    const isAdmin = true;
+    const isAdmin = false;
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
