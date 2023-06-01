@@ -1,9 +1,39 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import useAxiosSecure from "../../hooks/UseAxiosSecure";
 import useMenu from "../../hooks/useMenu";
 
 const ManageItems = () => {
-    const [menu] = useMenu();
+    const [menu, refetch] = useMenu();
+    const [axiosSecure] = useAxiosSecure();
+
+    const handleDeleteItem = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/menu/${id}`)
+            .then(res => {
+              if(res.data.deletedCount){
+                Swal.fire(
+                    'Deleted!',
+                    'Item has been deleted.',
+                    'success'
+                  )
+                  refetch()
+              }
+            })
+            }
+          })
+   
+    }
     return (
         <section className="p-5 md:p-10">
             <SectionTitle heading={'MANAGE ALL ITEMS'} subHeading={'Hurry Up'}></SectionTitle>
@@ -41,10 +71,10 @@ const ManageItems = () => {
                                 </td>
                                 <td>${item.price.toFixed(2)}</td>
                                 <td >
-                                  <div className="flex justify-between items-center">
-                                  <FaEdit className="w-5 h-5 text-accent cursor-pointer"></FaEdit>
-                                    <FaTrashAlt className="w-5 h-5 text-red-600 cursor-pointer" />
-                                  </div>
+                                    <div className="flex justify-between items-center">
+                                        <FaEdit className="w-5 h-5 text-accent cursor-pointer"></FaEdit>
+                                        <FaTrashAlt onClick={() => handleDeleteItem(item._id)} className="w-5 h-5 text-red-600 cursor-pointer" />
+                                    </div>
                                 </td>
                             </tr>)
                         }
