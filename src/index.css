@@ -25,3 +25,7 @@
 .drawer-side a.active {
   @apply text-white bg-transparent;
 }
+
+.my-input {
+  @apply w-full rounded-lg py-2 px-4 bg-white border-0 focus:outline-accent;
+}

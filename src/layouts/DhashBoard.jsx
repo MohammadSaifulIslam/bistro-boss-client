@@ -8,7 +8,6 @@ import useAdmin from "../hooks/useAdmin";
 const DhashBord = () => {
     // const isAdmin = false;
     const [isAdmin] = useAdmin();
-    console.log(isAdmin)
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -31,7 +30,7 @@ const DhashBord = () => {
                             isAdmin ?
                                 <>
                                     <li><NavLink to='/abc'><HiOutlineHome /> Admin Home</NavLink></li>
-                                    <li><NavLink to='/abc'><FaUtensils/> Add Items</NavLink></li>
+                                    <li><NavLink to='/dashboard/add-item'><FaUtensils/> Add Items</NavLink></li>
                                     <li><NavLink to='/abc'><BiWallet /> Mange  Items</NavLink></li>
                                     <li><NavLink to='/abc'><FaBook /> Mange  Booking</NavLink></li>
                                     <li><NavLink to='/dashboard/all-users'><HiOutlineUserGroup /> All Users</NavLink></li>
