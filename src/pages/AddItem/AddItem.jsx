@@ -1,28 +1,44 @@
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/UseAxiosSecure";
 
 export default function App() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [axiosSecure] = useAxiosSecure();
+    const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
         console.log(data)
 
         // img upload
         const formData = new FormData();
         formData.append('image', data.image[0]);
-
         const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_SECRET_KEY}`;
-        console.log(url)
+
         fetch(url, {
             method: "POST",
             body: formData
         })
             .then(res => res.json())
             .then(imgResponse => {
-                if(imgResponse.status){
+                if (imgResponse.status) {
                     const imgUrl = imgResponse.data.display_url;
-                    console.log(imgUrl)
+                    const { price, name, recipe, category } = data;
+                    const newItem = { name, recipe, image: imgUrl, category, price: parseFloat(price) }
+
+                    axiosSecure.post('/menu', newItem)
+                        .then(res => {
+                            if (res.data.insertedId) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Item added to menu',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                reset()
+                            }
+                        })
 
                 }
-          })
+            })
     };
 
 
@@ -52,6 +68,7 @@ export default function App() {
                                 <option value="soup">Soup</option>
                                 <option value="dessert">Dessert</option>
                                 <option value="drinks">Drinks</option>
+                                <option value="desi">Desi</option>
                             </select>
                         </label>
                     </div>
@@ -73,7 +90,6 @@ export default function App() {
                     </label>
                 </div>
                 <input type="file" className="file-input w-full max-w-xs mt-4" {...register("image")} required />
-                {errors.exampleRequired && <span>This field is required</span>}
 
                 <input type="submit" className="my-btn block mt-5 cursor-pointer" value={'Add Item'} />
             </form>
