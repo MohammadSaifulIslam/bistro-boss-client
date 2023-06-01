@@ -11,10 +11,11 @@ const DhashBord = () => {
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col items-center justify-center">
+            <div className="drawer-content">
+            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden mb-5">Open drawer</label>
                 <ScrollRestoration />
                 <Outlet />
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+              
 
             </div>
             <div className="drawer-side">
@@ -31,7 +32,7 @@ const DhashBord = () => {
                                 <>
                                     <li><NavLink to='/abc'><HiOutlineHome /> Admin Home</NavLink></li>
                                     <li><NavLink to='/dashboard/add-item'><FaUtensils/> Add Items</NavLink></li>
-                                    <li><NavLink to='/abc'><BiWallet /> Mange  Items</NavLink></li>
+                                    <li><NavLink to='/dashboard/manage-items'><BiWallet /> Mange  Items</NavLink></li>
                                     <li><NavLink to='/abc'><FaBook /> Mange  Booking</NavLink></li>
                                     <li><NavLink to='/dashboard/all-users'><HiOutlineUserGroup /> All Users</NavLink></li>
                                 </>
