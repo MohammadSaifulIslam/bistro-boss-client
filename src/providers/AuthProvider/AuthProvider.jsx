@@ -10,7 +10,7 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const googleProvider = new GoogleAuthProvider();
 
     const createUser = (email, password) => {
@@ -44,15 +44,15 @@ const AuthProvider = ({ children }) => {
         const unsubcriber = () => {
             onAuthStateChanged(auth, (currentUser) => {
                 setUser(currentUser)
-                
+
                 if (currentUser) {
                     axios.post('http://localhost:5000/jwt', { email: currentUser.email })
-                    .then(res => {
-                        localStorage.setItem('access-token', res.data.token)
-                        setLoading(false)
-                    })
+                        .then(res => {
+                            localStorage.setItem('access-token', res.data.token)
+                            setLoading(false)
+                        })
                 }
-                else{
+                else {
                     localStorage.removeItem('access-token')
                 }
             })

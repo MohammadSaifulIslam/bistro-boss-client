@@ -1,4 +1,5 @@
 import { FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import useCart from "../../hooks/useCart";
@@ -52,7 +53,7 @@ const MyCart = () => {
             <div className="  text-3xl font-bold flex justify-between uppercase">
                 <h3>Total items: {cart.length}</h3>
                 <h3>Total Price: ${totalPrice.toFixed(2)}</h3>
-                <button className="my-btn">Pay</button>
+              <Link to='/dashboard/payment'> <button className="my-btn">Pay</button></Link>
             </div>
 
             {/* cart table */}

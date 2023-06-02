@@ -3,6 +3,7 @@ import DhashBord from "../layouts/DhashBoard";
 import Main from "../layouts/Main";
 import AddItem from "../pages/AddItem/AddItem";
 import AllUsers from "../pages/AllUsers/AllUsers";
+import Payment from "../pages/DashBoard/Payment/Payment";
 import Home from "../pages/HomePage/Home/Home";
 import ManageItems from "../pages/ManageItems/ManageItems";
 import MenuHome from "../pages/MenuPage/MenuHome/MenuHome";
@@ -44,21 +45,27 @@ const router = createBrowserRouter([
     path: 'dashboard',
     element: <PrivateRoutes> <DhashBord /></PrivateRoutes>,
     children: [
+      // user's route
+      {
+        path: 'payment',
+        element: <Payment/>
+      },
       {
         path: 'my-cart',
-        element: <PrivateRoutes> <MyCart /></PrivateRoutes>
+        element: <MyCart />
       },
+      // admin's routes
       {
         path: 'all-users',
         element: <AllUsers />
       },
       {
         path: 'add-item',
-        element:<AdminRoute><AddItem/></AdminRoute>
+        element: <AdminRoute><AddItem /></AdminRoute>
       },
       {
         path: 'manage-items',
-        element:<AdminRoute><ManageItems/></AdminRoute>
+        element: <AdminRoute><ManageItems /></AdminRoute>
       },
     ]
   }
