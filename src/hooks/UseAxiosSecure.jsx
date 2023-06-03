@@ -3,16 +3,17 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider/AuthProvider';
 
+// Create an Axios instance with a base URL
+const axiosSecure = axios.create({
+    baseURL: 'http://localhost:5000', // Replace with your base URL
+});
 const useAxiosSecure = () => {
     const navigate = useNavigate();
     const { logoutUser } = useContext(AuthContext);
 
-         // Create an Axios instance with a base URL
-         const axiosSecure = axios.create({
-            baseURL: 'http://localhost:5000', // Replace with your base URL
-        });
+
     useEffect(() => {
-   
+
 
         // Add an interceptor to inject the authorization header
         axiosSecure.interceptors.request.use((config) => {
@@ -39,7 +40,7 @@ const useAxiosSecure = () => {
             }
         );
 
-    }, [navigate, logoutUser, axiosSecure]);
+    }, [navigate, logoutUser]);
 
     return [axiosSecure];
 };

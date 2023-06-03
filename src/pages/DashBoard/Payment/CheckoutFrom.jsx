@@ -1,25 +1,28 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/UseAxiosSecure";
 import { AuthContext } from "../../../providers/AuthProvider/AuthProvider";
+import './CheckoutFrom.css';
 
-const CheckoutFrom = ({ price }) => {
+const CheckoutFrom = ({ price, cart }) => {
   const [error, setError] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
   const [axiosSecure] = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [processing, setProcessing] = useState(false);
   const [transectionId, setTransectionId] = useState('');
 
-
   useEffect(() => {
-    axiosSecure.post('/create-payment-intent', { price })
-      .then(res => {
-        console.log(res.data.clientSecret)
-        setClientSecret(res.data.clientSecret)
-      })
+    if (price > 0) {
+      axiosSecure.post('/create-payment-intent', { price })
+        .then(res => {
+          console.log(res.data.clientSecret)
+          setClientSecret(res.data.clientSecret)
+        })
+    }
 
   }, [])
 
@@ -35,7 +38,7 @@ const CheckoutFrom = ({ price }) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: 'card',
       card
     })
@@ -47,7 +50,7 @@ const CheckoutFrom = ({ price }) => {
       setError(null)
       // console.log('[PaymentMethod]', paymentMethod);
     }
-setProcessing(true)
+    setProcessing(true)
     const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
       clientSecret,
       {
@@ -55,21 +58,43 @@ setProcessing(true)
           card: card,
           billing_details: {
             name: user?.displayName || 'anonymous',
-            email: user?.email || 'unknown'
+            email: user?.email || 'unknown',
           },
         },
       },
     );
 
-    if(confirmError){
+    if (confirmError) {
       console.log(confirmError)
     }
     setProcessing(false)
     console.log(paymentIntent)
-    if(paymentIntent.status === "succeeded"){
+    if (paymentIntent.status === "succeeded") {
       setTransectionId(paymentIntent.id)
       // TODO: next step
-      console.log('success', paymentIntent)
+      const paymentData = {
+        price,
+        transectionId,
+        name: user?.displayName,
+        email: user?.email,
+        date: new Date(),
+        status: 'pending',
+        quantity: cart.length,
+        itemNames: cart.map(item => item.name),
+        cartItems: cart.map(item => item._id),
+        menuItems: cart.map(item => item.menuId)
+      }
+
+      axiosSecure.post('/payments', paymentData)
+        .then(res => {
+          if (res.data.paymentResult.insertedId) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Payment Success',
+              text: 'You successfully paid the food bill'
+            })
+          }
+        })
     }
 
   }
