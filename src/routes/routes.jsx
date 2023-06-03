@@ -3,7 +3,9 @@ import DhashBord from "../layouts/DhashBoard";
 import Main from "../layouts/Main";
 import AddItem from "../pages/AddItem/AddItem";
 import AllUsers from "../pages/AllUsers/AllUsers";
+import AdminHome from "../pages/DashBoard/AdminHome/AdminHome";
 import Payment from "../pages/DashBoard/Payment/Payment";
+import UserHome from "../pages/DashBoard/UserHome/UserHome";
 import Home from "../pages/HomePage/Home/Home";
 import ManageItems from "../pages/ManageItems/ManageItems";
 import MenuHome from "../pages/MenuPage/MenuHome/MenuHome";
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
     children: [
       // user's route
       {
+        path: 'user-home',
+        element: <UserHome/>
+      },
+      {
         path: 'payment',
         element: <Payment/>
       },
@@ -55,6 +61,10 @@ const router = createBrowserRouter([
         element: <MyCart />
       },
       // admin's routes
+      {
+        path: 'admin-home',
+        element: <AdminRoute><AdminHome/></AdminRoute>
+      },
       {
         path: 'all-users',
         element: <AllUsers />
