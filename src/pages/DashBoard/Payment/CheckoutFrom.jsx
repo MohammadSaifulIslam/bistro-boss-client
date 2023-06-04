@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/UseAxiosSecure";
 import { AuthContext } from "../../../providers/AuthProvider/AuthProvider";
-import './CheckoutFrom.css';
 
 const CheckoutFrom = ({ price, cart }) => {
   const [error, setError] = useState(null);

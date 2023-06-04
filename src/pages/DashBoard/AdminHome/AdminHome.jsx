@@ -1,20 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/UseAxiosSecure";
+import Chart from "./Chart";
+import Stats from "./Stats";
 
 const AdminHome = () => {
-    const [axiosSecure] = useAxiosSecure();
-    const { data: stats = {} } = useQuery({
-        queryKey: ['admin-stats'],
-        queryFn: async () => {
-            const res = await axiosSecure.get('/admin-stats')
-            return res.data
-        }
-    })
-    console.log(stats)
+
     return (
-        <div>
-            admin er basa
-        </div>
+        <section className="px-5 md:w-11/12 mx-auto py-10">
+            <h2 className="text-xl font-semibold">Hi, Welcome Back!</h2>
+            <Stats />
+            <Chart />
+        </section>
     );
 };
 
